@@ -86,6 +86,7 @@ def Testing():
         print("ERROR:  STILL HERE")
 
     # print(hash_table_insert(ht,"name", "jon"))
-    # print(ht.storage)
+    print(ht.storage)
+    print(ht.storage[9])
 
 Testing()

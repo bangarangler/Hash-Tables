@@ -35,7 +35,15 @@ def hash_table_insert(hash_table, key, value):
 
 
 def hash_table_remove(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+
+    if (hash_table.storage[index] is None or
+            hash_table.storage[index].key != key):
+        print(f"Unable to remove item with key {key}")
+        return None
+    else:
+        hash_table.storage[index] = None
+
 
 def hash_table_retrieve(hash_table, key):
     index = hash(key, hash_table.capacity)
@@ -57,6 +65,7 @@ def Testing():
 
     hash_table_insert(ht, "line", "Here today...\n")
     hash_table_insert(ht, "hello", "world\n")
+    hash_table_remove(ht, "line")
 
     if hash_table_retrieve(ht, "line") is None:
         print("... gone tomorrow (success!)")

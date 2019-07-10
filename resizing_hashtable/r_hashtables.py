@@ -27,6 +27,7 @@ def hash(string, max):
 
 
 # Fill this in.
+# jp
 
 # Hint: Used the LL to handle collisions
 def hash_table_insert(hash_table, key, value):

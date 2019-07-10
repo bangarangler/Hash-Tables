@@ -30,6 +30,10 @@ def hash(string, max):
 
 # Hint: Used the LL to handle collisions
 def hash_table_insert(hash_table, key, value):
+    if hash_table.count < int(hash_table.capacity * .2):
+        hash_table_resize(hash_table)
+    elif hash_table.count > int(hash_table.capacity * .7):
+        hash_table_resize(hash_table)
     index = hash(key, hash_table.capacity)
     newPair = LinkedPair(key, value)
     if hash_table.storage[index] is not None:
@@ -112,24 +116,27 @@ def hash_table_retrieve(hash_table, key):
 # Fill this in
 def hash_table_resize(hash_table):
     # make new array
-    new_hash_table = HashTable(hash_table.capacity * 2)
-    # loop over old array
-    while hash_table.count > 0:
-        print(f"resize running...")
-        for i in hash_table.storage:
-            if i is not None:
-                print(f"i is... {i.key}")
-                key = i.key
-                value = i.value
-                hash_table_remove(hash_table, key)
-                hash_table_insert(new_hash_table, key, value)
+    if hash_table.count < hash_table.capacity // 2:
+        new_hash_table = HashTable(hash_table.capacity // 2)
+    else:
+        new_hash_table = HashTable(hash_table.capacity * 2)
+        # loop over old array
+        while hash_table.count > 0:
+            print(f"resize running...")
+            for i in hash_table.storage:
+                if i is not None:
+                    print(f"i is... {i.key}")
+                    key = i.key
+                    value = i.value
+                    hash_table_remove(hash_table, key)
+                    hash_table_insert(new_hash_table, key, value)
 
-    # hash_table.capacity = new_hash_table.capacity
-    # hash_table.storage = new_hash_table.storage
-    # hash_table.count = new_hash_table.count
-    # return hash_table
-    return new_hash_table
-    print(f"ht in resize is... {hash_table.storage}")
+    hash_table.capacity = new_hash_table.capacity
+    hash_table.storage = new_hash_table.storage
+    hash_table.count = new_hash_table.count
+    return hash_table
+    print(f"ht in resize is... {new_hash_table.storage}")
+    # return new_hash_table
     # pick first item, remove from old array
     # add to new array
     # don't forget to rehash all the keys
